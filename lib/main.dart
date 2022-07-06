@@ -16,25 +16,48 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
-
+  var _pontuacaoTotal = 0;
   final _perguntas = const [
     {
       'texto': 'Qual sua cor favorita?',
-      'respostas': ['Preto', 'Vermelho', 'Verde', 'Outra'],
+      'respostas': [
+        {'texto': 'Preto', 'pontuacao': 10},
+        {'texto': 'Vermelho', 'pontuacao': 5},
+        {'texto': 'Verde', 'pontuacao': 3},
+        {'texto': 'Outra', 'pontuacao': 1},
+      ],
     },
     {
       'texto': 'Qual seu animal favorito?',
-      'respostas': ['Coelho', 'Cobra', 'Elefante', 'Outro'],
+      'respostas': [
+        {'texto': 'Coelho', 'pontuacao': 10},
+        {'texto': 'Cobra', 'pontuacao': 5},
+        {'texto': 'Elefante', 'pontuacao': 3},
+        {'texto': 'Outro', 'pontuacao': 1},
+      ],
     },
     {
       'texto': 'Qual seu filme favorito?',
-      'respostas': ['Batman', 'Vingadores', 'Velozes e Furiosos', 'Outro'],
+      'respostas': [
+        {'texto': 'Batman', 'pontuacao': 10},
+        {'texto': 'Vingadores', 'pontuacao': 5},
+        {'texto': 'Velozes e Furiosos', 'pontuacao': 3},
+        {'texto': 'Outro', 'pontuacao': 1},
+      ],
     },
   ];
 
-  void _responder() {
+  void _responder(int pontuacao) {
     setState(() {
       _perguntaSelecionada++;
+      _pontuacaoTotal += pontuacao;
+    });
+  }
+
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
     });
   }
 
@@ -56,7 +79,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                   perguntaSelecionada: _perguntaSelecionada,
                   responder: _responder,
                 )
-              : const Resultado(),
+              : Resultado(_pontuacaoTotal, _reiniciarQuestionario),
         ));
   }
 }
